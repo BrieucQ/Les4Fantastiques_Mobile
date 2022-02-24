@@ -34,13 +34,6 @@ export default function Home () {
               Ticket 2 : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </Text>
             <Button
-              icon={
-                <Icon
-                  name="code"
-                  color="#ffffff"
-                  iconStyle={{ marginRight: 10 }}
-                />
-              }
               buttonStyle={{
                 borderRadius: 0,
                 marginLeft: 0,
@@ -52,7 +45,7 @@ export default function Home () {
             />
           </Card>
           <Card>
-            <Card.Title>PROJET 1</Card.Title>
+            <Card.Title>PROJET 2</Card.Title>
             <Card.Divider />
             <Text style={{ marginBottom: 10 }}>
               Ticket 1 : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -62,13 +55,6 @@ export default function Home () {
               Ticket 2 : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </Text>
             <Button
-              icon={
-                <Icon
-                  name="code"
-                  color="#ffffff"
-                  iconStyle={{ marginRight: 10 }}
-                />
-              }
               buttonStyle={{
                 borderRadius: 0,
                 marginLeft: 0,
