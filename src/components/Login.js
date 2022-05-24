@@ -1,16 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Image,
   TextInput,
   StyleSheet,
   Button,
-  TouchableHighlight
+  TouchableHighlight,
+  AsyncStorage
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
- 
- 
+import { SIGNIN } from './gql/mutations';
+import { useMutation } from '@apollo/client';
+
 export default function Login () {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [doSignIn] = useMutation(SIGNIN);
+
+  const onSubmit = async () => {
+    try {
+    const res = await doSignIn({
+      variables: {
+        email: email,
+        password: password
+      }
+    });
+    if (res.data.signin) {
+      await AsyncStorage.setItem("token", res.data.signin);
+    }
+  }
+  catch(err) {
+    console.error("Problème de serveur")
+  }
+
+
+    navigation.navigate('Home')
+  };
 
   const navigation = useNavigation();
 
@@ -18,19 +43,24 @@ export default function Login () {
     <>
         <View
           style={styles.View}>
-        <Image style={styles.image} 
+        <Image style={styles.image}
         source={require('../../assets/easy-ticket-logo.jpg')} 
         />
         <TextInput 
         style={styles.input}
-        placeholder="Username" />
+        placeholder="Username"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)} />
         <TextInput 
         style={styles.input}
-        placeholder="Password" />
+        placeholder="Password"
+        value={password}
+        textContentType="password"
+        onChange={(e) => setPassword(e.target.value)} />
         <TouchableHighlight 
         style={styles.button}>
         <Button
-        title="Login" onPress={() => navigation.navigate('Home')}/>
+        title="Login" onPress={onSubmit}/>
         </TouchableHighlight>
         </View>
     </>

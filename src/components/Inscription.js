@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Image,
@@ -12,6 +12,24 @@ import { useNavigation } from '@react-navigation/native';
  
 export default function Inscription () {
 
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSignUp = useAuth();
+
+  const onSubmit = async () => {
+    await handleSignUp({
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      password: password
+    });
+    navigation.navigate('Login')
+  }
+
   const navigation = useNavigation();
 
   return (
@@ -23,17 +41,28 @@ export default function Inscription () {
         />
         <TextInput 
         style={styles.input}
-        placeholder="Username" />
+        placeholder="Firstname"
+        onChange={(e) => setFirstname(e.target.value)} />
         <TextInput 
         style={styles.input}
-        placeholder="Password" />
+        placeholder="LastName"
+        onChange={(e) => setLastname(e.target.value)} />
         <TextInput 
         style={styles.input}
-        placeholder="Confirm Password" />
+        placeholder="Email" 
+        onChange={(e) => setEmail(e.target.value)}/>
+        <TextInput 
+        style={styles.input}
+        placeholder="Password" 
+        onChange={(e) => setPassword(e.target.value)}/>
+        <TextInput 
+        style={styles.input}
+        placeholder="Confirm Password" 
+        onChange={(e) => setConfirmPassword(e.target.value)}/>
         <TouchableHighlight 
         style={styles.button}>
         <Button
-        title="Inscription" onPress={() => navigation.navigate('Login')}/>
+        title="Inscription" onPress={onSubmit}/>
         </TouchableHighlight>
         </View>
     </>
