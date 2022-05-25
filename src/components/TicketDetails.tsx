@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { View, ScrollView, Text, StyleSheet, Image } from "react-native";
-import { Card, Button, Icon } from 'react-native-elements';
+import { Card } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 import CircularProgress from 'react-native-circular-progress-indicator';
 
 export default function Home () {
@@ -101,5 +100,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  feather: {
+    
   }
 });

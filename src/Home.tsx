@@ -41,7 +41,7 @@ export default function Home () {
                 marginBottom: 0,
               }}
               title="VOIR PLUS"
-              onPress={() => navigation.navigate('TicketDetails')}
+              onPress={() => navigation.navigate('TicketDetails' as never)}
             />
           </Card>
           <Card>
@@ -62,7 +62,7 @@ export default function Home () {
                 marginBottom: 0,
               }}
               title="VOIR PLUS"
-              onPress={() => navigation.navigate('TicketDetails')}
+              onPress={() => navigation.navigate('TicketDetails' as never)}
             />
           </Card>
     </View>
@@ -99,4 +99,5 @@ const styles = StyleSheet.create({
       width: 50,
       margin: 5
   },
+  feather: {}
 });

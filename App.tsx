@@ -7,17 +7,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import { AsyncStorage } from 'react-native';
 import Login from './src/components/Login';
 import Home from './src/Home';
-import Inscription from './src/components/Inscription';
 import TicketDetails from './src/components/TicketDetails';
 
 const Drawer = createDrawerNavigator();
 const httpLink = createHttpLink({
-  uri: "http://127.0.0.1:4000/graphql"
+  uri: "http://192.168.11.162:4000/graphql"
 });
 
-const authLink = setContext((_, { headers }) => {
+const authLink = setContext( async (_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = AsyncStorage.getItem("token");
+  const token = await AsyncStorage.getItem("token");
+  console.log(token);
   // return the headers to the context so httpLink can read them
   return {
     headers: {
@@ -34,9 +34,7 @@ const client = new ApolloClient({
 });
 
 export default function App() {
-  const [isConnected, setIsConnected] = useState(false);
-
-  if(isConnected) {
+  // const [isConnected, setIsConnected] = useState(false);
   return (
     <>
     <ApolloProvider client={client}>
@@ -50,18 +48,4 @@ export default function App() {
     </ApolloProvider>
     </>
   );
-  } else {
-    return (
-      <>
-      <ApolloProvider client={client}>
-      <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Login">
-        <Drawer.Screen name="Login" component={Login} />
-        <Drawer.Screen name="Inscription" component={Inscription} />
-      </Drawer.Navigator>
-    </NavigationContainer>
-    </ApolloProvider>
-      </>
-    )
-  }
 }
