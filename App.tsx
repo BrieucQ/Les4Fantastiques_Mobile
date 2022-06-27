@@ -4,10 +4,12 @@ import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@ap
 import { setContext } from '@apollo/client/link/context';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Login from './src/components/Login';
 import Home from './src/Home';
 import TicketDetails from './src/components/TicketDetails';
+import 'react-native-reanimated';
+import AuthProvider from './src/components/Auth/AuthProvider';
 
 const Drawer = createDrawerNavigator();
 const httpLink = createHttpLink({
@@ -38,6 +40,7 @@ export default function App() {
   return (
     <>
     <ApolloProvider client={client}>
+      <AuthProvider>
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Login">
         <Drawer.Screen name="Login" component={Login} />
@@ -45,6 +48,7 @@ export default function App() {
         <Drawer.Screen name="TicketDetails" component={TicketDetails} />
       </Drawer.Navigator>
     </NavigationContainer>
+    </AuthProvider>
     </ApolloProvider>
     </>
   );

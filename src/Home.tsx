@@ -3,10 +3,12 @@ import { View, ScrollView, Text, StyleSheet, Image } from "react-native";
 import { Card, Button, Icon } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useAuth } from "./components/Auth/AuthProvider";
 
 export default function Home () {
 
   const navigation = useNavigation();
+  const { signOut } = useAuth();
 
   return (
       <>
@@ -65,6 +67,17 @@ export default function Home () {
               onPress={() => navigation.navigate('TicketDetails' as never)}
             />
           </Card>
+          <Button buttonStyle={{
+                borderRadius: 0,
+                marginLeft: 0,
+                marginRight: 0,
+                marginBottom: 0,
+              }} 
+              title="Logout"
+              onPress={() => {
+                signOut()
+                navigation.navigate('Login' as never)
+              }} />
     </View>
     </ScrollView>
     </>

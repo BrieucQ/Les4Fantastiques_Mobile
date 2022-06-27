@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 import { GETCURRENTUSER } from "../gql/queries";
 import { SIGNIN } from "../gql/mutations";
 import { IAuthContext } from "./types";
-import { AsyncStorage } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface IProps {
   children: ReactNode;
@@ -41,9 +41,10 @@ const AuthProvider = (props: IProps) => {
     }
   };
 
-  const signOut = () => {
-    AsyncStorage.removeItem("token");
+  const signOut = async () => {
+    const removedToken = await AsyncStorage.removeItem("token");
     setIsConnected(false);
+    console.log("logout", removedToken);
   };
 
   useEffect(() => {

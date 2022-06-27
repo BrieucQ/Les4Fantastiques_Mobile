@@ -5,9 +5,9 @@ import {
   TextInput,
   StyleSheet,
   Button,
-  TouchableHighlight,
-  AsyncStorage
+  TouchableHighlight
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { SIGNIN } from './gql/mutations';
 import { useMutation } from '@apollo/client';
@@ -26,7 +26,7 @@ export default function Login() {
         }
       });
       if (res.data.signin) {
-        await AsyncStorage.setItem("token", res.data.signin);
+        const token = await AsyncStorage.setItem("token", res.data.signin);
       }
     }
     catch (err) {
