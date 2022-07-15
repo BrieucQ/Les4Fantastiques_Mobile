@@ -1,11 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { View, ScrollView, Text, StyleSheet, Image } from "react-native";
 import { Card } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
 import CircularProgress from 'react-native-circular-progress-indicator';
+import { gql, useQuery } from "@apollo/client";
+
+export const GETTICKETS = gql`
+query($data: TicketFiltersInput!){
+  getTickets(data:$data){
+      id
+      name
+      project{
+          id
+      }
+      userTicket{
+          role
+      }
+  }
+}
+`;
 
 export default function Home () {
+
+  const { data, loading, error } = useQuery(GETTICKETS);
+
+  if (loading) return <Text>Loading...</Text>
+  if (error) return <Text>{error.message}</Text>
 
   const [value, setValue] = useState(0);
 
@@ -24,21 +45,16 @@ export default function Home () {
         </View>
     </View>
     <View style={styles.secondContainer}>
+    {data.getTickets.map((ticket) => (
     <Card>
-            <Card.Title>TICKET NAME</Card.Title>
+            <Card.Title>{ticket.name}</Card.Title>
             <Card.Divider />
             <Text style={{ marginBottom: 10 }}>
-              Task 1 : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              {ticket.description}
             </Text>
             <Card.Divider />
-            <Text style={{ marginBottom: 10 }}>
-            Task 2 : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Text>
-            <Card.Divider />
-            <Text style={{ marginBottom: 10 }}>
-            Task 3 : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Text>
           </Card>
+          ))}
           <Card>
             <Card.Title>Commentaires</Card.Title>
             <Card.Divider />

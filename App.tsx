@@ -16,10 +16,16 @@ const httpLink = createHttpLink({
   uri: "http://192.168.11.162:4000/graphql"
 });
 
+let token = "";
 const authLink = setContext( async (_, { headers }) => {
+  try {
   // get the authentication token from local storage if it exists
-  const token = await AsyncStorage.getItem("token");
-  console.log(token);
+  token = await AsyncStorage.getItem("token");
+  console.log("getItem", token);
+  }
+  catch(e) {
+    console.error(e)
+  }
   // return the headers to the context so httpLink can read them
   return {
     headers: {

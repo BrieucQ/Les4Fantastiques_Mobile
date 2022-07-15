@@ -26,11 +26,13 @@ export default function Login() {
         }
       });
       if (res.data.signin) {
-        const token = await AsyncStorage.setItem("token", res.data.signin);
+        await AsyncStorage.setItem("token", res.data.signin);
+        
       }
     }
-    catch (err) {
-      console.error(JSON.stringify(err, null, 4))
+    catch (e) {
+      console.error("doSignIn", e);
+      // console.error(JSON.stringify(e, null, 4))
     }
     navigation.navigate('Home' as never)
   };

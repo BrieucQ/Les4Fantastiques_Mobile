@@ -5,6 +5,7 @@ import { GETCURRENTUSER } from "../gql/queries";
 import { SIGNIN } from "../gql/mutations";
 import { IAuthContext } from "./types";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 interface IProps {
   children: ReactNode;

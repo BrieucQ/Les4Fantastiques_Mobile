@@ -4,8 +4,22 @@ import { Card, Button, Icon } from 'react-native-elements';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from "./components/Auth/AuthProvider";
+import { useQuery, gql } from "@apollo/client";
+
+const GETPROJECTS = gql`
+query {
+	getProjects {
+		id
+	}
+}
+`;
 
 export default function Home () {
+
+  const { data, loading, error } = useQuery(GETPROJECTS);
+
+  if (loading) return <Text>Loading...</Text>
+  if (error) return <Text>{error.message}</Text>
 
   const navigation = useNavigation();
   const { signOut } = useAuth();
@@ -25,36 +39,16 @@ export default function Home () {
         </View>
     </View>
     <View style={styles.secondContainer}>
+    {data.getProjects.map((project) => (
     <Card>
-            <Card.Title>PROJET 1</Card.Title>
+            <Card.Title>{project.name}</Card.Title>
             <Card.Divider />
             <Text style={{ marginBottom: 10 }}>
-              Ticket 1 : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              {project.timeEstimation}
             </Text>
             <Card.Divider />
             <Text style={{ marginBottom: 10 }}>
-              Ticket 2 : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Text>
-            <Button
-              buttonStyle={{
-                borderRadius: 0,
-                marginLeft: 0,
-                marginRight: 0,
-                marginBottom: 0,
-              }}
-              title="VOIR PLUS"
-              onPress={() => navigation.navigate('TicketDetails' as never)}
-            />
-          </Card>
-          <Card>
-            <Card.Title>PROJET 2</Card.Title>
-            <Card.Divider />
-            <Text style={{ marginBottom: 10 }}>
-              Ticket 1 : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </Text>
-            <Card.Divider />
-            <Text style={{ marginBottom: 10 }}>
-              Ticket 2 : Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              {project.timeSpent}
             </Text>
             <Button
               buttonStyle={{
@@ -67,6 +61,7 @@ export default function Home () {
               onPress={() => navigation.navigate('TicketDetails' as never)}
             />
           </Card>
+          ))}
           <Button buttonStyle={{
                 borderRadius: 0,
                 marginLeft: 0,
